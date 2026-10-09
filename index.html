@@ -1,0 +1,214 @@
+
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CodeLearn 練功房 | Python 程式練習</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <a class="brand" href="#" onclick="showPage('dashboard');return false">
+        <span class="brand-icon">&lt;/&gt;</span>
+        <span>CodeLearn<small>程式練功房</small></span>
+      </a>
+
+      <p class="nav-label">學習中心</p>
+      <button class="nav-item active" data-page="dashboard"
+        onclick="showPage('dashboard')">⌂　首頁總覽</button>
+      <button class="nav-item" data-page="questions"
+        onclick="showPage('questions')">▤　題庫練習</button>
+      <button class="nav-item" data-page="history"
+        onclick="showPage('history')">▥　學習紀錄</button>
+
+      <div class="sidebar-bottom">
+        <div class="mini-card">
+          <span class="status-dot"></span> Python 練習模式
+          <p>每天練習，持續進步</p>
+        </div>
+        <button class="nav-item" onclick="openLogin()">♙　會員登入</button>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div>
+          <span class="eyebrow">PYTHON LEARNING PLATFORM</span>
+          <h2 id="page-heading">首頁總覽</h2>
+        </div>
+        <button class="user-button" onclick="openLogin()">
+          <span class="avatar" id="avatar">訪</span>
+          <span id="user-name">訪客使用者</span>
+        </button>
+      </header>
+
+      <section id="dashboard" class="page">
+        <div class="hero">
+          <div class="hero-copy">
+            <span class="hero-tag">YOUR CODING JOURNEY</span>
+            <h1>讓每一次練習，<br>都成為進步的開始。</h1>
+            <p>從 Python 基礎開始，循序練習程式邏輯，<br>
+              為 TQC+ 程式設計認證做好準備。</p>
+            <button class="primary-btn" onclick="showPage('questions')">
+              開始練習　→
+            </button>
+          </div>
+          <div class="hero-art">
+            <div class="code-window">
+              <div class="window-dots">● ● ●</div>
+              <code><span>def</span> practice():<br>
+                &nbsp;&nbsp;skill = <em>"Python"</em><br>
+                &nbsp;&nbsp;return <strong>"Keep going!"</strong><br><br>
+                <span>print</span>(practice())</code>
+              <div class="code-badge">✓ Keep learning</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="stats-grid">
+          <article class="stat-card">
+            <span>題庫總數</span>
+            <strong id="total-count">6</strong>
+            <small>道練習題</small>
+          </article>
+          <article class="stat-card">
+            <span>已完成題目</span>
+            <strong id="solved-count">0</strong>
+            <small>持續累積中</small>
+          </article>
+          <article class="stat-card">
+            <span>答題次數</span>
+            <strong id="attempt-count">0</strong>
+            <small>包含重複練習</small>
+          </article>
+          <article class="stat-card">
+            <span>目前通過率</span>
+            <strong id="pass-rate">0%</strong>
+            <small>依提交紀錄統計</small>
+          </article>
+        </div>
+
+        <div class="section-heading">
+          <div>
+            <h3>開始你的練習</h3>
+            <p>選擇題目，逐步累積程式實力。</p>
+          </div>
+          <button class="text-btn" onclick="showPage('questions')">
+            查看全部題目 →
+          </button>
+        </div>
+        <div id="featured-list" class="question-grid"></div>
+      </section>
+
+      <section id="questions" class="page hidden">
+        <div class="section-heading">
+          <div>
+            <h3>Python 題庫</h3>
+            <p>從基礎語法開始，逐步挑戰不同題型。</p>
+          </div>
+        </div>
+        <div class="filter-bar">
+          <input id="search-input" type="search"
+            placeholder="搜尋題目名稱或關鍵字...">
+          <select id="level-filter">
+            <option value="全部">全部難度</option>
+            <option value="入門">入門</option>
+            <option value="初級">初級</option>
+          </select>
+        </div>
+        <div id="question-list" class="question-list"></div>
+      </section>
+
+      <section id="practice" class="page hidden">
+        <button class="text-btn back-btn"
+          onclick="showPage('questions')">← 返回題庫</button>
+        <div class="practice-layout">
+          <article class="panel problem-panel">
+            <span id="practice-id" class="eyebrow">PY-001</span>
+            <h2 id="practice-title">Hello World</h2>
+            <span id="practice-level" class="level">入門</span>
+            <div id="practice-description" class="problem-description"></div>
+            <h4>輸出範例</h4>
+            <pre id="practice-example" class="output-example"></pre>
+            <h4>作答提醒</h4>
+            <p id="practice-hint" class="muted"></p>
+          </article>
+
+          <article class="panel editor-panel">
+            <div class="editor-top">
+              <span>⌘　main.py</span>
+              <span>Python 3 · Demo</span>
+            </div>
+            <textarea id="code-editor" spellcheck="false"
+              aria-label="Python 程式碼編輯區"
+              placeholder="在此撰寫 Python 程式碼"></textarea>
+            <div class="editor-actions">
+              <button class="secondary-btn" onclick="resetCode()">重設</button>
+              <button class="secondary-btn" onclick="showExampleCode()">
+                查看參考程式
+              </button>
+              <button class="primary-btn" onclick="submitCode()">
+                提交答案
+              </button>
+            </div>
+            <div class="result-box">
+              <div class="result-title">評測結果</div>
+              <p id="result-message">等待提交答案...</p>
+              <pre id="result-output"></pre>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="history" class="page hidden">
+        <div class="section-heading">
+          <div>
+            <h3>我的學習紀錄</h3>
+            <p>查看練習狀況，找出需要加強的地方。</p>
+          </div>
+          <button class="secondary-btn" onclick="clearHistory()">
+            清除紀錄
+          </button>
+        </div>
+        <div class="panel table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>題目</th><th>最近結果</th><th>練習次數</th>
+              </tr>
+            </thead>
+            <tbody id="history-table"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <footer>CodeLearn 練功房 · 課堂專題展示版</footer>
+    </main>
+  </div>
+
+  <div id="login-modal" class="modal hidden">
+    <div class="modal-card">
+      <button class="modal-close" onclick="closeLogin()">✕</button>
+      <div class="login-logo">&lt;/&gt;</div>
+      <h2>歡迎回到 CodeLearn</h2>
+      <p>登入展示帳號，開始你的 Python 練習。</p>
+      <form id="login-form">
+        <label for="login-account">使用者名稱</label>
+        <input id="login-account" required maxlength="30"
+          placeholder="例如：student01">
+        <label for="login-password">密碼</label>
+        <input id="login-password" type="password" required
+          placeholder="輸入任意展示用密碼">
+        <button class="primary-btn full-btn" type="submit">
+          展示登入
+        </button>
+      </form>
+      <p class="muted small">此為展示登入，不會驗證真實帳號或密碼。</p>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
